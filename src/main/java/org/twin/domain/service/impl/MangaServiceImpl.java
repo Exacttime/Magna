@@ -23,10 +23,11 @@ public class MangaServiceImpl implements MangaService {
     public void deleteManga(Long id){
         mangaRepository.deleteById(id);
     }
-    public Manga getManga(Long id){
-        return mangaRepository.getReferenceById(id);
+    public Manga getManga(Long id) {
+        return mangaRepository.findById(id)
+                .orElseThrow(MangaNotFoundException::new);
     }
-    public List<Manga> getAll(){
+    public List<Manga> getAllMangas(){
         return mangaRepository.findAll();
     }
     public List<Manga> getByNameContaining(String title){

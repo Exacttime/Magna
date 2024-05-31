@@ -5,7 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.twin.application.request.CreateMangaRequest;
+import org.twin.application.request.UpdateMangaRequest;
+import org.twin.application.response.DeleteMangaResponse;
 import org.twin.application.response.ReadMangaResponse;
+import org.twin.application.response.ReadMangaWithUserResponse;
 import org.twin.domain.exception.MangaNotFoundException;
 import org.twin.domain.exception.UserNotFoundException;
 import org.twin.domain.model.Manga;
@@ -24,7 +27,14 @@ public class MangaController {
     private MangaService mangaService;
     @Autowired
     private UserService userService;
-
+    @GetMapping
+    public ResponseEntity<List<ReadMangaWithUserResponse>> getAllMangas() {
+        List<Manga> mangas = mangaService.getAllMangas();
+        List<ReadMangaWithUserResponse> mangaWithUserResponses = mangas.stream()
+                .map(ReadMangaWithUserResponse::new)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(mangaWithUserResponses,HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<ReadMangaResponse> getMangaById(@PathVariable Long id) {
         Manga manga = mangaService.getManga(id);
@@ -42,7 +52,7 @@ public class MangaController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(mangasResponse, HttpStatus.OK);
     }
-    @PostMapping
+    @PostMapping(headers = "userId")
     public ResponseEntity<ReadMangaResponse> createManga(@RequestHeader("userId") Long userId, @RequestBody CreateMangaRequest createMangaRequest) {
         Manga manga = new Manga();
         manga.setTitle(createMangaRequest.getTitle());
@@ -59,5 +69,24 @@ public class MangaController {
 
         ReadMangaResponse readMangaResponse = new ReadMangaResponse(createdManga);
         return new ResponseEntity<>(readMangaResponse, HttpStatus.CREATED);
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ReadMangaResponse> updateManga(@PathVariable Long id, @RequestBody UpdateMangaRequest updateMangaRequest) {
+        Manga manga = mangaService.getManga(id);
+        manga.setTitle(updateMangaRequest.getTitle());
+        manga.setDescription(updateMangaRequest.getDescription());
+        manga.setChapter(updateMangaRequest.getChapter() != null ? updateMangaRequest.getChapter() : 1);
+
+        Manga updateManga = mangaService.updateManga(manga);
+
+        ReadMangaResponse readMangaResponse = new ReadMangaResponse(updateManga);
+        return new ResponseEntity<>(readMangaResponse, HttpStatus.CREATED);
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<DeleteMangaResponse> deleteManga(@RequestParam Long id) {
+        Manga manga = mangaService.getManga(id);
+        mangaService.deleteManga(manga.getId());
+        DeleteMangaResponse deleteMangaResponse = new DeleteMangaResponse(manga,true,"Manga deletado com sucesso");
+        return ResponseEntity.ok(deleteMangaResponse);
     }
 }
