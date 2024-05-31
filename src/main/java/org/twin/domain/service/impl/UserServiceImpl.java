@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.twin.domain.exception.UserNotFoundException;
 import org.twin.domain.model.Usuario;
 import org.twin.domain.service.UserService;
-import org.twin.repository.UserRepository;
+import org.twin.infrastructure.repository.UserRepository;
 
 import java.util.List;
 
