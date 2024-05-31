@@ -5,7 +5,10 @@ import org.twin.domain.model.Manga;
 import java.util.List;
 
 public interface MangaService {
-    public Manga getManga(Long id);
-    public Manga createManga(Manga manga);
-    public List<Manga> getByNameContaining(String title);
+    Manga getManga(Long id);
+    Manga createManga(Manga manga);
+    void deleteManga(Long id);
+    List<Manga> getByNameContaining(String title);
+    Manga updateManga(Manga manga);
+    List<Manga> getAllMangas();
 }

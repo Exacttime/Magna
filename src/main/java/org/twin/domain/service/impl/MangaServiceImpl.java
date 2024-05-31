@@ -8,6 +8,7 @@ import org.twin.domain.service.MangaService;
 import org.twin.infrastructure.repository.MangaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MangaServiceImpl implements MangaService {
@@ -23,10 +24,11 @@ public class MangaServiceImpl implements MangaService {
     public void deleteManga(Long id){
         mangaRepository.deleteById(id);
     }
-    public Manga getManga(Long id){
-        return mangaRepository.getReferenceById(id);
+    public Manga getManga(Long id) {
+        return mangaRepository.findById(id)
+                .orElseThrow(MangaNotFoundException::new);
     }
-    public List<Manga> getAll(){
+    public List<Manga> getAllMangas(){
         return mangaRepository.findAll();
     }
     public List<Manga> getByNameContaining(String title){
