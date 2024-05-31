@@ -8,7 +8,6 @@ import org.twin.domain.service.MangaService;
 import org.twin.infrastructure.repository.MangaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MangaServiceImpl implements MangaService {
