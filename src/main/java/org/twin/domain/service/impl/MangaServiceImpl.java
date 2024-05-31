@@ -2,6 +2,7 @@ package org.twin.domain.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.twin.domain.exception.MangaNotFoundException;
 import org.twin.domain.model.Manga;
 import org.twin.domain.service.MangaService;
 import org.twin.infrastructure.repository.MangaRepository;
@@ -26,14 +27,17 @@ public class MangaServiceImpl implements MangaService {
         return mangaRepository.getReferenceById(id);
     }
     public List<Manga> getAll(){
-        return  mangaRepository.findAll();
+        return mangaRepository.findAll();
+    }
+    public List<Manga> getByNameContaining(String title){
+        return mangaRepository.findAllByTitleContainingIgnoreCase(title);
     }
     public Manga updateManga(Manga manga){
         if(mangaRepository.existsById(manga.getId())){
             return mangaRepository.save(manga);
         }
         else{
-            throw new RuntimeException("Manga não achado");
+            throw new MangaNotFoundException();
         }
     }
 }

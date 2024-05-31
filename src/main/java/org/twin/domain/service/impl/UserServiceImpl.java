@@ -8,6 +8,7 @@ import org.twin.domain.service.UserService;
 import org.twin.infrastructure.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,11 +30,15 @@ public class UserServiceImpl implements UserService {
     public List<Usuario> getAllUsers() {
         return userRepository.findAll();
     }
-    public void updateUser(Usuario user) {
-        if(userRepository.existsById(user.getId())) {
-            userRepository.save(user);
-        }
-        else{
+    public Usuario updateUser(Usuario existingUser) {
+        Optional<Usuario> optionalUser = userRepository.findById(existingUser.getId());
+        if (optionalUser.isPresent()) {
+            Usuario userToUpdate = optionalUser.get();
+            userToUpdate.setUsername(existingUser.getUsername());
+            userToUpdate.setPassword(existingUser.getPassword());
+
+            return userRepository.save(userToUpdate);
+        } else {
             throw new UserNotFoundException();
         }
     }
