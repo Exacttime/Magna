@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.twin.domain.model.Manga;
 import org.twin.domain.service.MangaService;
-import org.twin.repository.MangaRepository;
+import org.twin.infrastructure.repository.MangaRepository;
 
 import java.util.List;
 
@@ -15,8 +15,9 @@ public class MangaServiceImpl implements MangaService {
     public MangaServiceImpl(MangaRepository mangaRepository) {
         this.mangaRepository = mangaRepository;
     }
-    public void createManga(Manga manga){
+    public Manga createManga(Manga manga){
         mangaRepository.save(manga);
+        return manga;
     }
     public void deleteManga(Long id){
         mangaRepository.deleteById(id);
