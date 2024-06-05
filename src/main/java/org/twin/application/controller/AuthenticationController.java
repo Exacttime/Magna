@@ -36,7 +36,7 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
         }
         System.out.println(createUserRequest.getUsername() + createUserRequest.getPassword());
-        Usuario user = new Usuario(createUserRequest.getUsername(),passwordEncoder.encode(createUserRequest.getPassword()));
+        Usuario user = new Usuario(createUserRequest.getUsername(),passwordEncoder.encode(createUserRequest.getPassword()), createUserRequest.getEmail());
         Set<String> strRoles = createUserRequest.getRole();
         Set<Role> roles = new HashSet<>();
         if (strRoles == null) {
