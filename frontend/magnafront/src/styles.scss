@@ -21,6 +21,7 @@
   
   body{
     line-height: 1;
+    background-color: #070B0B;
   }
   
   ol, ul{
@@ -46,3 +47,5 @@
     -webkit-appearance: none;
     border-radius: 0;
   }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import {FormComponent} from "../../components/form/form.component";
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormComponent],
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
 })
-export class LoginPageComponent {}
+export class RegisterComponent {}
