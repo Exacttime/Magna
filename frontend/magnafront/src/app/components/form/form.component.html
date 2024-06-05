@@ -4,7 +4,7 @@
             <mat-label>Username</mat-label>
             <input matInput>
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field *ngIf="mode=='register'" appearance="outline">
             <mat-label>Email</mat-label>
             <input matInput>
         </mat-form-field>
@@ -12,6 +12,6 @@
             <mat-label>Senha</mat-label>
             <input matInput type="password">
         </mat-form-field>
-        <button mat-raised-button color="primary">Enviar</button>
+        <button mat-raised-button color="primary">{{submit}}</button>
     </div>
 </div>
