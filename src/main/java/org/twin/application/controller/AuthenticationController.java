@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.twin.application.request.CreateUserRequest;
 import org.twin.application.response.ErrorResponse;
 import org.twin.application.response.ReadUserResponse;
-import org.twin.domain.exception.UsernameAlreadyTakenException;
 import org.twin.domain.model.Enums.ERoles;
 import org.twin.domain.model.Role;
 import org.twin.domain.model.Usuario;
