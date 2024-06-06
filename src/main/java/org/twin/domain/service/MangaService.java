@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface MangaService {
     Manga getManga(Long id);
+    List<Manga> getAllUserMangas(Long id);
     Manga createManga(Manga manga);
     void deleteManga(Long id);
     List<Manga> getByNameContaining(String title);

@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.twin.domain.exception.MangaNotFoundException;
 import org.twin.domain.model.Manga;
+import org.twin.domain.model.Usuario;
 import org.twin.domain.service.MangaService;
+import org.twin.domain.service.UserService;
 import org.twin.infrastructure.repository.MangaRepository;
 
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
 public class MangaServiceImpl implements MangaService {
     @Autowired
     private MangaRepository mangaRepository;
+    @Autowired
+    private UserService userService;
     public MangaServiceImpl(MangaRepository mangaRepository) {
         this.mangaRepository = mangaRepository;
     }
@@ -27,6 +31,13 @@ public class MangaServiceImpl implements MangaService {
         return mangaRepository.findById(id)
                 .orElseThrow(MangaNotFoundException::new);
     }
+
+    @Override
+    public List<Manga> getAllUserMangas(Long id) {
+        Usuario actualUser = userService.getUserById(id);
+        return mangaRepository.findAllByUsuario(actualUser);
+    }
+
     public List<Manga> getAllMangas(){
         return mangaRepository.findAll();
     }

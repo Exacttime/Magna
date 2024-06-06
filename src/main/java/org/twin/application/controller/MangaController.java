@@ -1,8 +1,10 @@
 package org.twin.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.twin.application.request.CreateMangaRequest;
 import org.twin.application.request.UpdateMangaRequest;
@@ -27,11 +29,20 @@ public class MangaController {
     private MangaService mangaService;
     @Autowired
     private UserService userService;
-    @GetMapping
+    @GetMapping("/list")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<ReadMangaWithUserResponse>> getAllMangas() {
         List<Manga> mangas = mangaService.getAllMangas();
         List<ReadMangaWithUserResponse> mangaWithUserResponses = mangas.stream()
                 .map(ReadMangaWithUserResponse::new)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(mangaWithUserResponses,HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<List<ReadMangaResponse>> getAllUserMangas(@RequestHeader Long userId) {
+        List<Manga> mangas = mangaService.getAllUserMangas(userId);
+        List<ReadMangaResponse> mangaWithUserResponses = mangas.stream()
+                .map(ReadMangaResponse::new)
                 .collect(Collectors.toList());
         return new ResponseEntity<>(mangaWithUserResponses,HttpStatus.OK);
     }
