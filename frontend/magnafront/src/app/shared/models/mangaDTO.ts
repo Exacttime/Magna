@@ -1,5 +1,6 @@
 export interface Manga {
-    name:string,
-    imgsource:string, //file
+    title:string,
     description:string,
+    imageUrl:string,
+    chapter:number,
 }
