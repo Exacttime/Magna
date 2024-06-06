@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -11,6 +11,17 @@ import {MatButton} from "@angular/material/button";
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
-export class FormComponent {
-  isLogin: boolean = false;
+export class FormComponent implements OnInit {
+  @Input() mode: 'register' | 'login' = 'register';
+  submit!: String;
+  constructor() {
+  }
+  ngOnInit(): void {
+    if(this.mode === "login") {
+      this.submit = 'Logar';
+    }
+    else{
+    this.submit = 'Registrar';
+    }
+  }
 }

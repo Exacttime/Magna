@@ -9,4 +9,5 @@ import {FormComponent} from "../../components/form/form.component";
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent {}
+export class RegisterComponent {
+}
