@@ -8,5 +8,6 @@ import lombok.Setter;
 public class CreateMangaRequest {
     private String title;
     private String description;
+    private String mangaUrl;
     private Integer chapter;
 }
