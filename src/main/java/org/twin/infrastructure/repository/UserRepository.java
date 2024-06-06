@@ -6,4 +6,6 @@ import org.twin.domain.model.Usuario;
 
 @Repository
 public interface UserRepository extends JpaRepository<Usuario,Long> {
+    Usuario findUsuarioByUsername(String username);
+    boolean existsByUsername(String username);
 }

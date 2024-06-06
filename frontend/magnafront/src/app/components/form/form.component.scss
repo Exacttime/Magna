@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-field{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #E5E6E6;
+  width: 400px; /* Ajustei a largura para 400px */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra para um efeito mais agradável */
+}
+
+mat-form-field {
+  width: 100%; /* Faz os campos ocuparem toda a largura do contêiner */
+  margin-bottom: 15px; /* Espaçamento entre os campos */
+}
+
+button {
+  width: 100%; /* Faz o botão ocupar toda a largura */
+  margin-top: 10px; /* Espaçamento acima do botão */
+}

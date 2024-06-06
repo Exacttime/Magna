@@ -18,6 +18,7 @@ public class Manga {
     private Usuario usuario;
     private String title;
     private String description;
+    private String imageUrl;
     @Column(nullable = false)
     private int chapter = 1;
 }
