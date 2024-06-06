@@ -3,19 +3,29 @@ package org.twin.application.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.twin.application.request.CreateUserRequest;
+import org.twin.application.request.UserLoginRequest;
 import org.twin.application.response.ErrorResponse;
 import org.twin.application.response.ReadUserResponse;
+import org.twin.application.response.UserLoginResponse;
 import org.twin.domain.model.Enums.ERoles;
 import org.twin.domain.model.Role;
 import org.twin.domain.model.Usuario;
 import org.twin.domain.service.RoleService;
 import org.twin.domain.service.UserService;
+import org.twin.infrastructure.security.JwtUtils;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -27,6 +37,10 @@ public class AuthenticationController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @PostMapping("/signup")
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequest createUserRequest) {
@@ -70,5 +84,20 @@ public class AuthenticationController {
 
         ReadUserResponse userResponse = new ReadUserResponse(createdUser);
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest userLoginRequest){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userLoginRequest.getUsername(),userLoginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        List<String> roles = usuario.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+        return ResponseEntity.ok(new UserLoginResponse(jwt,
+                usuario.getId(),
+                usuario.getUsername(),
+                roles));
     }
 }
