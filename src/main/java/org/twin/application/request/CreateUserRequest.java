@@ -1,6 +1,5 @@
 package org.twin.application.request;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -16,8 +15,12 @@ public class CreateUserRequest {
     private String username;
 
     @NotBlank
-    @Size(min = 6, max = 40)
+    @Size(min = 4, max = 40)
     private String password;
+
+    @NotBlank
+    @Size(min = 1, max = 40)
+    private String email;
 
     private Set<String> role;
 }

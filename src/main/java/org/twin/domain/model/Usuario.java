@@ -1,6 +1,7 @@
 package org.twin.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,9 +22,10 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String username;
     private String password;
+    @Email
+    private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -38,15 +40,17 @@ public class Usuario implements UserDetails {
 
     public Usuario() {}
 
-    public Usuario(Long id, String username, String password, Set<Role> roles) {
+    public Usuario(Long id, String username, String password,String email, Set<Role> roles) {
         this.id = id;
         this.username = username;
+        this.email = email;
         this.password = password;
         this.roles = roles;
     }
 
-    public Usuario(String username, String password) {
+    public Usuario(String username, String password,String email) {
         this.username = username;
+        this.email = email;
         this.password = password;
     }
 
