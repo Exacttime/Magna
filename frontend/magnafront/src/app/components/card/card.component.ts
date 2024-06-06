@@ -17,5 +17,5 @@ export class CardComponent {
   @Input() title = 'Tate no yuusha';
   @Input() content = 'Anime do escudo';
   @Input() imageUrl = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
-  @Input() currentChapter: any = 1;
+  @Input() currentChapter: number = 1;
 }
