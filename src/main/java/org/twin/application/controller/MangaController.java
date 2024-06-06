@@ -57,6 +57,7 @@ public class MangaController {
         Manga manga = new Manga();
         manga.setTitle(createMangaRequest.getTitle());
         manga.setDescription(createMangaRequest.getDescription());
+        manga.setImageUrl(createMangaRequest.getMangaUrl());
         manga.setChapter(createMangaRequest.getChapter() != null ? createMangaRequest.getChapter() : 1);
 
         Usuario usuario = userService.getUserById(userId);
