@@ -36,6 +36,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
+                        //TODO remover essa permissão absoluta à api, mas falta a integração do login no frontend
                         .anyRequest().authenticated()
                 );
         httpSecurity.authenticationProvider(authenticationProvider());

@@ -7,7 +7,7 @@ import { Manga } from 'src/app/shared/models/mangaDTO';
   providedIn: 'root'
 })
 export class MangaService {
-  private apiUrl = 'https://api.example.com/mangas';
+  private apiUrl = 'http://localhost:8080/api/mangas';
 
   constructor(private http: HttpClient) {}
 
