@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: magna-db
+    environment:
+      MYSQL_DATABASE: magna
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - magna-network
+    volumes:
+      - db-data:/var/lib/mysql
+
+  app:
+    image: magna-app:latest
+    container_name: magna-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/magna
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - db
+    networks:
+      - magna-network
+
+networks:
+  magna-network:
+    driver: bridge
+
+volumes:
+  db-data:

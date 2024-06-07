@@ -18,6 +18,11 @@ public class Role {
 
     }
 
+    public Role(Integer id, ERoles name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Role(ERoles name) {
         this.name = name;
     }
