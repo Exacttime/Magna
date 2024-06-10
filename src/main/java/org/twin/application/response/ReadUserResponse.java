@@ -9,9 +9,11 @@ public class ReadUserResponse {
     private Long id;
     private String username;
     private String email;
+    private String token;
     public ReadUserResponse(Usuario usuario) {
         this.id = usuario.getId();
         this.username = usuario.getUsername();
         this.email = usuario.getEmail();
+         this.token = this.getToken();
     }
 }

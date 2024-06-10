@@ -78,7 +78,8 @@ public class AuthenticationController {
             });
         }
         user.setRoles(roles);
-        System.out.println(user.getUsername() + user.getPassword() + user.getRoles());
+        //System.out.println(user.getUsername() + user.getPassword() + user.getRoles());
+        //TODO remover o comentario que estava sendo usado para testar.
         Usuario createdUser = userService.createUser(user);
 
         ReadUserResponse userResponse = new ReadUserResponse(createdUser);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Manga } from 'src/app/shared/models/mangaDTO';
 
@@ -12,6 +12,8 @@ export class MangaService {
   constructor(private http: HttpClient) {}
 
   getMangas(): Observable<Manga[]> {
-    return this.http.get<Manga[]>(this.apiUrl);
+    let userId = localStorage.getItem('id');
+    let headers = new HttpHeaders({'userId': `${userId}`});
+    return this.http.get<Manga[]>(this.apiUrl,{headers});
   }
 }
